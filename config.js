@@ -5,31 +5,32 @@
  */
 
 module.exports = {
-    public: false,
-    fetchDelay: 2000,
+    public: true,
+    fetchDelay: 20000,
     fetchAmount: 500,
     data: {
-        APIkey: "http://apikey.com",
-        user: "user",
-        pass: "pass",
-        twoFactSec: "e1e2e3e4e5e6e7e8"
+        APIdomain: 'https://ron-swanson-quotes.herokuapp.com/v2/quotes/2',
+        APIkey: 'keykey',
+        user: 'user',
+        pass: 'pass',
+        twoFactSec: 'sec123'
     },
     parse: {
-        sortBy: "id",
+        sortBy: 'id',
         sort2nd: null,
         display: {
             vars: [
-                "id",
-                "name",
-                "sort",
-                "type",
-                "info",
-                "etc"
+                'id',
+                'name',
+                'sort',
+                'type',
+                'info',
+                'etc'
             ]
         },
         determineValid: {
-            actual: "price",
-            nominal: "suggested_price"
+            actual: 'price',
+            nominal: 'suggested_price'
         }
     },
     action: {

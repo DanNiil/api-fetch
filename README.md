@@ -1,3 +1,3 @@
 # api-fetch
-API fetcher and parser.
+API fetch and parse backend.
 Generalized for re-use.

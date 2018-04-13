@@ -10,8 +10,9 @@ const config = require('./config');
 const https = require('https');
 
 function fetchData() {
-    var getReq = https.get(config.data.APIdomain, function(res) {
-        res.on('data', function(data) {
+    var getReq =  
+        https.get(config.data.APIdomain+config.fetchAmount, (res) => {
+            res.on('data', (data) => {
 
             //Will be sent to Parser, logging for testing
             var out = JSON.parse(data);
@@ -23,7 +24,7 @@ function fetchData() {
     });
 
     getReq.end();
-    getReq.on('error', function(err){
+    getReq.on('error', (err) => {
         console.log("Error: ", err);
     }); 
 };

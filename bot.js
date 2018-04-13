@@ -4,7 +4,8 @@
  */
 
 const config = require('./config');
-const fetch = require('./fetch');
+const Fetch = require('./fetch');
+const fetch = new Fetch;
 
 setInterval(makeFetch, config.fetchDelay);
 

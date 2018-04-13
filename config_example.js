@@ -3,10 +3,9 @@
  *  Will be modified as need be
  *  Compartmentalize for generalization
  * 
- *  RENAME TO config.js
+ *  ////   RENAME TO config.js    /////
  *  Fill out with you personal API config data
  */
-
 
 module.exports = {
     public: true,

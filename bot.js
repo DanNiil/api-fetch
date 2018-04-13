@@ -1,25 +1,21 @@
+
 /** 
  *  Main fetch loop
- * 
  */
 
 const config = require('./config');
 const fetch = require('./fetch');
+const parse = require('./parse');
 
-var loop = setInterval(makeFetch, config.fetchDelay);
+const loop = setInterval(makeFetch, config.fetchDelay);
+const API = config.data.APIdomain+
+            config.fetchAmount;
 
 function makeFetch() {
-    fetch.fetchData();
+    fetch.event.emit('fetchData', API);
 };
 
-fetch.on('error', (err) => {
+fetch.event.on('error', (err) => {
     clearInterval(loop);
     console.log('Bot stopped, fetch error: ', err);
-});
-
-//Testing emit and listen - works.
-fetch.on('test', (data) => {
-    clearInterval(loop);
-    var i = JSON.parse(data).length;
-    console.log('Test error: ',i);
 });

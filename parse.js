@@ -7,6 +7,10 @@
 const config = require('./config');
 const fetch = require('./fetch');
 
-fetch.on('test', (data) => {
-    console.log('SUCCESS');
-})
+fetch.event.on('fetched', (data) => {
+    var out = JSON.parse(data);
+    var i = out.length;
+    while(i>0) {
+        console.log(out[--i]);
+    }
+});

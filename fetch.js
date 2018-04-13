@@ -9,9 +9,7 @@ const https = require('https');
 const EventEmitter = require( 'events' );
 
 class Fetch extends EventEmitter {
-
     Fetch() { this.super() }
-
     fetchData() {
         var getReq =  
             https.get(config.data.APIdomain+config.fetchAmount, (res) => {
@@ -24,6 +22,8 @@ class Fetch extends EventEmitter {
                     console.log(out[--i])
                 }
                 this.emit('data', data);
+                //Testing emit signaling
+                this.emit('test', data)
             });
         });
     
@@ -35,4 +35,5 @@ class Fetch extends EventEmitter {
     };
 }
 
-module.exports = Fetch;
+const fetch = new Fetch();
+module.exports = fetch;

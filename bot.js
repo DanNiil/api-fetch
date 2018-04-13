@@ -4,11 +4,22 @@
  */
 
 const config = require('./config');
-const Fetch = require('./fetch');
-const fetch = new Fetch;
+const fetch = require('./fetch');
 
-setInterval(makeFetch, config.fetchDelay);
+var loop = setInterval(makeFetch, config.fetchDelay);
 
 function makeFetch() {
     fetch.fetchData();
 };
+
+fetch.on('error', (err) => {
+    clearInterval(loop);
+    console.log('Bot stopped, fetch error: ', err);
+});
+
+//Testing emit and listen - works.
+fetch.on('test', (data) => {
+    clearInterval(loop);
+    var i = JSON.parse(data).length;
+    console.log('Test error: ',i);
+});

@@ -5,3 +5,8 @@
  */
 
 const config = require('./config');
+const fetch = require('./fetch');
+
+fetch.on('test', (data) => {
+    console.log('SUCCESS');
+})

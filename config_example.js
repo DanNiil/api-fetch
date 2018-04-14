@@ -8,21 +8,24 @@
  */
 
 module.exports = {
-    public: true,
-    fetchDelay: 20000,
-    fetchAmount: 3,
+    public: true,                           //boolean for switching public / private API , false will enable injection
+    fetchDelay: 20000,                      //delay on recuring fetches in ms , default 20seconds
+    fetchAmount: 5,                         //number of posts to be fetched , default 5
     data: {
-        APIdomain: 'https://ron-swanson-quotes.herokuapp.com/v2/quotes/',
-        APIkey: 'keykey',
-        user: 'user',
-        pass: 'pass',
-        twoFactSec: 'sec123'
+        APIdomain: 'https://ron-swanson-quotes.herokuapp.com/v2/quotes/',   //main domain chunk of API , default is pure win
+        APIkey: 'keykey',                   //API key to use in call
+        user: 'user',                       //username for logins
+        pass: 'pass',                       //password for logins
+        twoFactSec: 'sec123',               //twoFactor secret for fetching codes
+        keyPos: 'api_key=',                 //API key position identifier
+        codePos: 'code=',                   //twofact code position identifier
+        APIargs: '?api_key=&code=&per_page='            //api call arguments , end with fetchAmount identifier
     },
     parse: {
-        sortBy: 'id',
+        sortBy: 'id',                       //unique identifier of blocks for duplicate checking etc
         sort2nd: null,
         display: {
-            vars: [
+            vars: [                         //dummy vars
                 'id',
                 'name',
                 'sort',
@@ -31,13 +34,20 @@ module.exports = {
                 'etc'
             ]
         },
-        determineValid: {
+        determineValid: {                   //dummy vars for determining interest / discard
             actual: 'price',
             nominal: 'suggested_price'
         }
     },
-    action: {
+    action: {                               //booleans for future possible action automation
         autoEnable: false,
         userEnable: false
+    },
+    xmodules: {                             //dummy private module strings
+        client: 'user',
+        market: 'market',
+        twoFact: 'twofact',
+        site: 'site',
+        manager: 'manager'
     }
 };

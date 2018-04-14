@@ -7,13 +7,14 @@ const config = require('./config');
 const fetch = require('./fetch');
 const parse = require('./parse');
 
-const loop = setInterval(makeFetch, config.fetchDelay);
 const API = config.data.APIdomain+
             config.fetchAmount;
 
-function makeFetch() {
+const loop = setInterval( () => {
     fetch.event.emit('fetchData', API);
-};
+    } ,
+    config.fetchDelay
+);
 
 fetch.event.on('error', (err) => {
     clearInterval(loop);

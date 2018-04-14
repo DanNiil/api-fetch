@@ -11,15 +11,17 @@ const event = new EventEmitter();
 event.on('fetchData', (API) => {
     var getReq =  
         https.get(API, (res) => {
-            res.on('data', (data) => {
+            let data = [];
+            res.on('error', (err) => {
+                event.emit('error', err);
+            }).on('data', (chunk) => {
+                data.push(chunk);
+            }).on('end', () => {
+                data = Buffer.concat(data).toString();
                 event.emit('fetched', data);
-        });
-    });
-
+            });
+        })
     getReq.end();
-    getReq.on('error', (err) => {
-        event.emit('error', err);
-    }); 
 });
 
 module.exports = {

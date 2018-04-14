@@ -6,29 +6,33 @@
 const config = require('./config');
 const fetch = require('./fetch');
 const parse = require('./parse');
+const notp = require('notp');
+const base32 = require('thirty-two');
 
-var twoFactCode = (secret) => {
-    //not implemented
-    return secret;
+const twoFactCode = (secret) => {
+    //generates time based 2fact code, TOTP
+    return notp.totp.gen(base32.decode(secret));
 };
 
-var injectAPI = (domain) => {
+const injectAPI = (domain) => {
     var finalD = domain;
     if(!config.public) {
+        //appends API arguments
         finalD += config.data.APIargs;
         //injects API key in API key pos
         var keyPos = finalD.search(config.data.keyPos)+config.data.keyPos.length;
         finalD = finalD.slice(0,keyPos) + config.data.APIkey + finalD.slice(keyPos,finalD.length);
         //injects twoFact code in code pos
-        var codePos = finalD.search(config.data.codePos)+config.data.codePos.length;
-        finalD = finalD.slice(0,codePos) + twoFactCode(config.data.twoFactSec) + finalD.slice(codePos,finalD.length);
+        if(config.data.codePos != null) {
+            var codePos = finalD.search(config.data.codePos)+config.data.codePos.length;
+            finalD = finalD.slice(0,codePos) + twoFactCode(config.data.twoFactSec) + finalD.slice(codePos,finalD.length);
+        }
     }
     return finalD+config.fetchAmount;
 };
 
-const API = injectAPI(config.data.APIdomain);
-
 const loop = setInterval( () => {
+    var API = injectAPI(config.data.APIdomain);
     fetch.event.emit('fetchData', API);
     } ,
     config.fetchDelay
@@ -36,5 +40,5 @@ const loop = setInterval( () => {
 
 fetch.event.on('error', (err) => {
     clearInterval(loop);
-    console.log('Bot stopped, fetch error: ', err);
+    console.log('Bot stopped, ERROR: ', err);
 });
